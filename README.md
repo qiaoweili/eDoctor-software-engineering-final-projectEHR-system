@@ -41,6 +41,7 @@ if the file is in root repository,\
 else:\
 *python3 -m pydoc api/auth.py*
 
+
 ### Contributors: 
 *Edmund*: \
 Front-end worker\
@@ -52,13 +53,13 @@ mySQL->mongodb & Robot3t\
 Part of basic front-end, Layui \
 Js,py files conduction\
 Iteration recorder \
-Testing (random generation part)
+Testing (random generation part)\
+Groupwork result collector(collect and combine files from different contributors)
 
 *Hannah*: \
-Process-check person\
 Profile/ search function co-editor\
 Testing(unittest part)\
-Check whether we have reached our weekly goals
+Process-check person\
 
 
 
