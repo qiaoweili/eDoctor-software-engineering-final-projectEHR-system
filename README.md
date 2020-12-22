@@ -59,7 +59,7 @@ Groupwork result collector(collect and combine files from different contributors
 *Hannah*: \
 Profile/ search function co-editor\
 Testing(unittest part)\
-Process-check person\
+Process-check person
 
 
 
