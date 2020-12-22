@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Login</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link rel="stylesheet" href="/static/depends/layui/css/layui.css">
+</head>
+<body>
+<div align="center" style="position: absolute; top:0%; left:0%; width:60%; height:100%">
+    <div id='d_image' align="center"
+         style="z-index: 0; position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); width: 70%;">
+        <img src="https://downloads.healthcatalyst.com/wp-content/uploads/2016/10/EHR-vs-Data-Warehouse.png"
+             align="center" style="width: 100%; height: 100%"/>
+    </div>
+</div>
+<div id="d_login" align="center"
+     style="z-index: 0; background: #47759D; position: absolute; left: 60%; top: 0%; width: 40%; height: 100%">
+    <div align="center" style="z-index: 10; position: absolute; left: 20%; top: 7.5%; width: 60%; height: 10%">
+        <h1>eDoctor</h1>
+    </div>
+    <div id="d_white_block" align="center"
+         style="border-radius: 10px; z-index: 10;background: white; position: absolute; left: 24%; top: 25%; width: 52%; height: 45%">
+        <div align="left" style="padding-left:15%; width: 70%; height: 20%; font-size: 12px">
+            <p>Account</p>
+            <p><input id="account" style="width: 80%"></p>
+        </div>
+        <div align="left" style="padding-left:15%; width: 70%; height: 20%; font-size: 12px">
+            <p>Password</p>
+            <p><input id="password" type="password" style="width: 80%"></p>
+        </div>
+        <div align="center" style="padding-top:25%; width: 100%; height: 100% font-size: 10px">
+            <span><button id="login"
+                          style="outline：none; background:#146C87; border-color: black; border-radius: 5px;  width: 40%; height: 7.5%"
+                          onclick="do_login()">
+                <font color="black">Login</font>
+            </button></span>
+        </div>
+        <div align="center" style="position:absolute; padding-top:3%; width: 100%; height: 100% font-size: 10px">
+            <span><button id="register"
+                          style="background:#146C87; border-color: black; border-radius: 5px;  width: 40%; height: 7.5%"
+                          onclick="document.getElementById('d_register').hidden=false;document.getElementById('d_login').hidden=true;">
+                <font color="black">Register</font>
+            </button></span>
+        </div>
+    </div>
+</div>
+
+<div id="d_register" align="center"
+     style="z-index: 0; background: #47759D; position: absolute; left: 60%; top: 0%; width: 40%; height: 100%"
+     hidden="true">
+    <div align="center" style="z-index: 10; position: absolute; left: 20%; top: 5%; width: 60%; height: 10%">
+        <h1>eDoctor</h1>
+    </div>
+    <div id="white_block" align="center"
+         style="border-radius: 10px; z-index: 10;background: white; position: absolute; left: 24%; top: 20%; width: 52%; height: 70%">
+        <div align="center" style="padding-top: 10px; width: 80%; height: 12.5%; font-size: 12px">
+            <span>Account</span>
+            <span><input id="reg_account" style="width: 70%"></span>
+        </div>
+        <div align="center" style="width: 80%; height: 12.5%; font-size: 12px">
+            <span>Password</span>
+            <span><input id="reg_password" type="password" style="width: 70%"></span>
+        </div>
+        <div align="center" style="width: 80%; height: 12.5%; font-size: 12px">
+            <span>Name</span>
+            <span><input id="name" style="width: 70%"></span>
+        </div>
+        <div align="center" style="width: 80%; height: 7.5%; font-size: 12px">
+            <span>
+                Gender
+            </span>
+            <span style="padding-left:20%">
+                    <input type="radio" name="sex" value="0" checked>Male
+                </span>
+            <span style="padding-left:20%">
+                    <input type="radio" name="sex" value="1">Female
+                </span>
+
+        </div>
+        <div align="left" style="width: 80%; height: 12.5%; font-size: 12px">
+            <span>Birthdate</span>
+            <span><input id="birth" type="date" style="width: 70%"></span>
+        </div>
+        <div align="center" style="width: 80%; height: 12.5%; font-size: 12px">
+            <span>
+                Tele
+            </span>
+            <span><input id="phone" style="width: 70%"></span>
+        </div>
+        <div align="center" style="width: 100%; height: 7.5%; font-size: 12px">
+            <span>
+                User Type
+            </span>
+            <span>
+                <input type="radio" name="u_type" value="0"
+                       onchange="document.getElementById('emp').hidden=true;document.getElementById('tbp').hidden=true;document.getElementById('white_block').style.height='70%';"
+                       checked>Patient
+            </span>
+            <span>
+            　　<input type="radio" name="u_type" value="1"
+                     onchange="document.getElementById('emp').hidden=false;document.getElementById('tbp').hidden=true;document.getElementById('white_block').style.height='80%';">Doctor
+            </span>
+            <span>
+            　　<input type="radio" name="u_type" value="2"
+                     onchange="document.getElementById('emp').hidden=true;document.getElementById('tbp').hidden=false;document.getElementById('white_block').style.height='80%';">Third-party
+            </span>
+        </div>
+        <div id="emp" align="center" style="width: 80%; height: 12.5%; font-size: 10px" hidden="true">
+            <span>
+                emp key
+            </span>
+            <span><input id="emp_key" style="width: 70%"></span>
+        </div>
+        <div id="tbp" align="center" style="width: 80%; height: 12.5%; font-size: 10px" hidden="true">
+            <span>
+                tbp key
+            </span>
+            <span><input id="tbp_key" style="width: 70%"></span>
+        </div>
+        <div align="center" style="padding-top:5%; width: 100%; height: 100% font-size: 10px">
+            <p>
+                <button id="reg"
+                        style="background:#146C87; border-color: black; border-radius: 5px;  width: 40%; height: 7.5%"
+                        onclick="do_register()">Confirm
+                </button>
+            </p>
+            <p>
+                <button id="back"
+                        style="background:#146C87; border-color: black; border-radius: 5px;  width: 40%; height: 7.5%"
+                        onclick="document.getElementById('d_register').hidden=true;document.getElementById('d_login').hidden=false;">
+                    Back
+                </button>
+            </p>
+        </div>
+    </div>
+
+</div>
+
+<script src="static/depends/layui/layui.js"></script>
+<script src="static/js/auth.js"></script>
+
+</body>
+</html>

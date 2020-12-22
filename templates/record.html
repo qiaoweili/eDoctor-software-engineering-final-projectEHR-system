@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Record</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link rel="stylesheet" href="/static/depends/layui/css/layui.css">
+</head>
+<body class="layui-layout-body">
+<div class="layui-layout layui-layout-admin">
+    <div class="layui-header">
+        <div class="layui-logo"><i style="font-size: 24px; font-weight: bolder; color: gray">eDoctor</i></div>
+        <ul class="layui-nav layui-layout-right">
+            <li class="layui-nav-item" lay-unselect="">
+                <a href="javascript:;" id="account">Searching...</a>
+                <dl class="layui-nav-child">
+                    <dd><a href="/profile">Change Profile</a></dd>
+<!--                    <dd><a href="javascript:void(0);" onclick="logout()">Logout</a></dd>-->
+                </dl>
+            </li>
+            <li class="layui-nav-item">
+                <a href="javascript:void(0);" onclick="logout()">Logout</a>
+            </li>
+        </ul>
+    </div>
+
+<!--navigation bar -->
+    <div class="layui-side layui-bg-black">
+        <div class="layui-side-scroll">
+            <ul class="layui-nav layui-nav-tree" lay-filter="">
+                <li class="layui-nav-item layui-nav-itemed">
+                    <a href="/">Basic Info</a>
+                </li>
+
+                <li class="layui-nav-item layui-nav-itemed">
+                    <a href="diagnose">Diagnose</a>
+                </li>
+
+                <li class="layui-nav-item layui-nav-itemed">
+                    <a href="record">Past Records</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+<!--end of navigation side bar-->
+
+    <div class="layui-body" style="height: 90%">
+        <div style="padding: 20px; height: 90%">
+            <blockquote class="layui-elem-quote layui-quote-nm">
+                <span class="layui-breadcrumb">
+                    <a><cite>Record</cite></a>
+                </span>
+            </blockquote>
+
+    <div class="layui-body" style="height: 90%">
+        <div>
+            <fieldset class="layui-elem-field layui-field-title" style="padding-top:2.5%;">
+                <legend>Medical Record
+                </legend>
+              </fieldset>
+        </div>
+
+        <div class="demoTable">
+            <div class="layui-form-item">
+                <label class="layui-form-label">disease category</label>
+                <div class="layui-input-block">
+                <select id="disease_cat" name="disease_cat">
+                    <option value="all" selected="selected">all</option>
+                    <option value="Internal">Internal</option>
+                    <option value="surgery">surgery</option>
+                    <option value="pediatrics ">pediatrics</option>
+                    <option value="gynecology">gynecology</option>
+                    <option value="ophthalmology">ophthalmology</option>
+                </select>
+                </div>
+            </div>
+
+            <div class="layui-form-item">
+                <label class="layui-form-label">disease name</label>
+                <div class="layui-input-block">
+                    <input type="text" id="disease_name" name="disease_name" required="required" placeholder="PLease Enter..." autocomplete="off" class="layui-input">
+                </div>
+            </div>
+
+<!--            <div class="layui-form-item">-->
+<!--                <label class="layui-form-label">date</label>-->
+<!--                <div class="layui-input-block">-->
+<!--                    <input type="text" id="date" name="disease_name" required="required" placeholder="PLease Enter..." autocomplete="off" class="layui-input">-->
+<!--                </div>-->
+<!--            </div>-->
+
+            <div class="layui-form-item">
+                <div class="layui-input-block">
+                    <button id="search_btn" class="layui-btn" data-type="reload" lay-filter="demo1">Search</button>
+                    <!--        <button type="submit" class="layui-btn" lay-submit="" lay-filter="demo1" onclick="search()">Search</button>-->
+                    <button type="reset" class="layui-btn layui-btn-primary" onclick="rewrite()">Clear</button>
+                    <button type="reset" class="layui-btn layui-btn-primary"><a href="/">Back</a></button>
+                    <!--        style="height:30px;background:#7185a2;line-height:30px;"-->
+                </div>
+            </div>
+        </div>
+
+
+        <div>
+            <div class="layui-row" style="margin-top: 1%">
+                <div id="record"></div>
+            </div>
+        </div>
+
+<script src="static/depends/layui/layui.js"></script>
+<script src="static/js/record_search.js"></script>
+
+
+<script>
+console.log("html script is working...");
+layui.use('table', function(){
+      var table = layui.table;
+
+      table.render({
+        elem: '#record'
+        ,height: 312
+        ,url: '/api/record/search'
+        ,response: {
+            statusCode: "200"
+        }
+        ,page: true
+        ,cols: [[
+          {field: 'date', title: 'date', width:180, sort: true, fixed: 'left'}
+          ,{field: 'doctor_id', title: 'doctor account', width:180}
+          ,{field: 'patient_id', title: 'patient account', width:180}
+          ,{field: 'disease_category', title: 'disease category', width:180}
+          ,{field: 'disease_name', title: 'disease name', width:180}
+          ,{field: 'symptom', title: 'symptom', width:180}
+          ,{field: 'medicine', title: 'medicine', width:180}
+        ]]
+        ,id: 'testReload'
+      });
+      //table.render syntax end
+
+      var $ = layui.$, active = {
+       //注释：layui 搜索模块 Start
+            reload: function(){
+                //var date = $('#date').val();
+                var disease_name = $('#disease_name').val();
+                if(disease_name =='')
+                    disease_name = 'all';
+                var disease_category = $('#disease_cat').val();
+                console.log("reload vars:",disease_name,disease_category);
+                table.reload('testReload', {
+                    page: {
+                        curr: 1
+                    }
+                    ,where: {
+                             //date: date
+                            disease_name: disease_name
+                            ,disease_category: disease_cat
+                    }
+                },'data');
+               // });
+                //table reload syntax end
+            },
+            // reload function syntax end
+       }; //active syntax end
+
+
+       $('#search_btn').on('click', function(){
+        var type = $(this).data('type');
+        active[type] ? active[type].call(this) : '';
+        });
+
+
+
+
+}) //use table syntax end
+</script>
+
+
+
+    </div>
+
+
+
+</body>
+</html>
